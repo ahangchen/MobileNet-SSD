@@ -5,7 +5,7 @@ sys.path.insert(0, caffe_root + 'python')
 import caffe  
 
 train_proto = 'example/MobileNetSSD_train.prototxt'
-train_model = 'snapshot/mobilenet_iter_1979.caffemodel'  #should be your snapshot caffemodel
+train_model = 'snapshot/mobilenet_iter_2000.caffemodel'  #should be your snapshot caffemodel
 
 deploy_proto = 'example/MobileNetSSD_deploy.prototxt'
 save_model = 'MobileNetSSD_deploy.caffemodel'
@@ -18,13 +18,13 @@ def merge_bn(net, nob):
     w = w * rstd * scale
     b = (b - mean) * rstd * scale + shift
     '''
-    for key in net.params.iterkeys():
+    for key,item in net.params.items():
         if type(net.params[key]) is caffe._caffe.BlobVec:
             if key.endswith("/bn") or key.endswith("/scale"):
                 continue
             else:
                 conv = net.params[key]
-                if not net.params.has_key(key + "/bn"):
+                if not key + "/bn" in net.params:
                     for i, w in enumerate(conv):
                         nob.params[key][i].data[...] = w.data
                 else:

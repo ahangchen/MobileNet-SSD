@@ -49,7 +49,7 @@ def get_labelname(labelmap, labels):
         labels = [labels]
     for label in labels:
         found = False
-        for i in xrange(0, num_labels):
+        for i in range(0, num_labels):
             if label == labelmap.item[i].label:
                 found = True
                 labelnames.append(labelmap.item[i].display_name)
@@ -70,12 +70,12 @@ img_width = img_blob.shape[3]
 label_blob = net.blobs['label'].data[0,0,:,:]
 num_labels = label_blob.shape[0]
 
-for i in xrange(num_imgs):
+for i in range(num_imgs):
     img = transformer.deprocess('data', img_blob[i])
     plt.subplot(1, num_imgs, i + 1)
     plt.imshow(img)
     currentAxis = plt.gca()
-    for j in xrange(num_labels):
+    for j in range(num_labels):
         gt_bbox = label_blob[j, :]
         if gt_bbox[0] == i:
             xmin = gt_bbox[3] * img_width
@@ -125,12 +125,12 @@ priorbox = net.blobs['mbox_priorbox'].data[0,0,:]
 num_priors = priorbox.shape[0]
 
 colors='rgbcmy'
-for i in xrange(num_imgs):
+for i in range(num_imgs):
     img = transformer.deprocess('data', img_blob[i])
     plt.subplot(1, num_imgs, i + 1)
     plt.imshow(img)
     currentAxis = plt.gca()
-    for j in xrange(240,243):
+    for j in range(240,243):
         prior_bbox = priorbox[j*4:(j+1)*4]
         xmin = prior_bbox[0] * img_width
         ymin = prior_bbox[1] * img_height
